@@ -14,10 +14,39 @@ class Car {
     }
   }
 }
+class Obstacle{
+  constructor(x,y,width,height,type){
+      this.x = x;
+      this.y = y;
+      this.width = width;
+      this.height = height;
+      this.type = type;
+  }
+
+  moveDownForever(){
+     let blah = setInterval(()=>{
+      //    each setInterval function gets a unique ID
+      // were using blah here to save this ID
+          this.y += 15;
+
+          if(this.y > 800){
+              clearInterval(blah)
+          }
+
+      },100)
+  }
+}
 
 let userCar = new Car(0, 650, 50, 100);
 const carImg = new Image();
+const coneImg = new Image();
+const potholeImg = new Image();
+const barricadeImg = new Image();
 carImg.src = './images/car.png';
+coneImg.src = './images/cone.png';
+potholeImg.src = './images/pothole.png';
+barricadeImg.src = './images/barricade.png';
+
 function drawCar() {
   ctx.clearRect(0, 0, 400, 800);
   ctx.fillRect(userCar.x, userCar.y, userCar.width, userCar.height);
