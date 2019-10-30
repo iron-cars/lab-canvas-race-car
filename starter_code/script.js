@@ -1,12 +1,12 @@
 const ctx = document.getElementById('cars').getContext('2d');  
 // window.onload = function() {
-//   document.getElementById("start-button").onclick = function() {
-//     startGame();
-//   };
+  document.getElementById("start-button").onclick = function() {
+    startGame();
+  };
 
-//   function startGame() {
+  function startGame() {
 
-//   }
+  }
 // };
 
 class Car {
@@ -16,10 +16,16 @@ class Car {
     this.width = width;
     this.height = height;
   }
+  moveCar(futureX){
+
+    if(futureX + this.width <= 400 && futureX >= 0){
+        this.x = futureX;
+    }
+   
+  }
 }
-
-let userCar = new Car(200, 700, 25, 50);
-
+   
+let userCar = new Car(200, 700, 50, 100);
 const carImg = new Image();
 carImg.src = './images/car.png';
 carImg.onload = () => {
