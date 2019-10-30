@@ -26,11 +26,11 @@ class Obstacle{
      let blah = setInterval(()=>{
       //    each setInterval function gets a unique ID
       // were using blah here to save this ID
-          this.y += 15;
+          this.y += 5;
           if(this.y > 800){
               clearInterval(blah)
           }
-      },100)
+      },25)
   }
  }
 
