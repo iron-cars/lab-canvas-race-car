@@ -42,8 +42,8 @@ body button {
 }
 
 #cars {
-  width: 500px;
-  height: 1000px;
+  width: 50vh;
+  height: 100vh;
   background-image: url('./images/theRoad.jpg'); 
   background-repeat: no-repeat;
   background-size: cover;
