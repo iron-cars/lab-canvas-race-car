@@ -1,5 +1,4 @@
 const ctx = document.getElementById('cars').getContext('2d');  
-
 class Car {
   constructor(x, y, width, height) {
     this.x = x;
@@ -52,6 +51,7 @@ function drawImages() {
   // ctx.fillRect(userCar.x, userCar.y, userCar.width, userCar.height);
   ctx.drawImage(carImg, userCar.x, userCar.y, userCar.width, userCar.height);
   for (let i = 0; i < obsArr.length; i++) {
+    // ctx.fillRect(obsArr[i].x, obsArr[i].y, obsArr[i].width, obsArr[i].height);
     ctx.drawImage(typesOfObs[obsArr[i].type], obsArr[i].x, obsArr[i].y, obsArr[i].width, obsArr[i].height);
   }
 }
@@ -64,25 +64,25 @@ function createObstacle () {
   let height;
   switch (r) {
     case 0:
-      x = Math.floor(Math.random() * 365) + 5;
-      width = 25;
-      height = 50;
+      x = Math.floor(Math.random() * 355) + 5;
+      width = 35;
+      height = 70;
       let cone = new Obstacle(x, y, width, height, r);
       cone.moveDownForever();
       obsArr.push(cone);
       break;
     case 1:
-      x = Math.floor(Math.random() * 365) + 5;
-      width = 25;
+      x = Math.floor(Math.random() * 340) + 5;
+      width = 50;
       height = 50;
       let pothole = new Obstacle(x, y, width, height, r);
       pothole.moveDownForever();
       obsArr.push(pothole);
       break;
     case 2:
-      x = Math.floor(Math.random() * 350) + 5;
-      width = 40;
-      height = 30;
+      x = Math.floor(Math.random() * 290) + 5;
+      width = 100;
+      height = 50;
       let barricade = new Obstacle(x, y, width, height, r);
       barricade.moveDownForever();
       obsArr.push(barricade);
@@ -94,6 +94,8 @@ function createObstacle () {
 
 document.getElementById("start-button").onclick = function() {
   startGame();
+  loopObs();
+  
 };
 
 function startGame() {
@@ -101,6 +103,11 @@ function startGame() {
   requestAnimationFrame(startGame);
 }
 
+function loopObs () {
+  setInterval(() => {
+    createObstacle();
+  }, 1000);
+}
 
 
 
@@ -116,10 +123,7 @@ document.onkeydown = function(e) {
       console.log('right');
       userCar.moveCar(userCar.x + 50);
       console.log(userCar.x)
-      break;
-    case 79:
-      createObstacle();
-      break;      
+      break;  
   }
 }
 
