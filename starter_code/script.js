@@ -20,6 +20,7 @@ const carImg = new Image();
 carImg.src = './images/car.png';
 function drawCar() {
   ctx.clearRect(0, 0, 400, 800);
+  ctx.fillRect(userCar.x, userCar.y, userCar.width, userCar.height);
   ctx.drawImage(carImg, userCar.x, userCar.y, userCar.width, userCar.height);
 }
 
