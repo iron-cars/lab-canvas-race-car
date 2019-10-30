@@ -97,7 +97,6 @@ document.getElementById("start-button").onclick = function() {
   loopObs();
   
 };
-
 function startGame() {
   drawImages();
   requestAnimationFrame(startGame);
@@ -126,4 +125,5 @@ document.onkeydown = function(e) {
       break;  
   }
 }
+
 
