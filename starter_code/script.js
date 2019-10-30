@@ -91,21 +91,51 @@ function createObstacle () {
 }
 
 
+let obstaclesHit = 0;
 
 document.getElementById("start-button").onclick = function() {
   startGame();
   loopObs();
-  
+  let healthHtml = document.createElement('h1');
+  healthHtml.setAttribute('class', 'health-points')
+  healthHtml.innerText = `${obstaclesHit}`;
+  document.querySelector('.game-intro').appendChild(healthHtml);
 };
+
 function startGame() {
   drawImages();
+  collisionDetect();
+  document.getElementById("start-button").disabled = true;
   requestAnimationFrame(startGame);
 }
+
+let currentSpeed = 2500;
 
 function loopObs () {
   setInterval(() => {
     createObstacle();
-  }, 1000);
+  }, currentSpeed);
+}
+
+function removeObstacle (i) {
+  obsArr.splice(i, 1);
+}
+
+
+function collision() {
+  obstaclesHit += 1;
+  document.querySelector('.health-points').innerText = `Obstacles Hit: ${obstaclesHit}`;
+}
+
+function collisionDetect(){
+  obsArr.forEach((obs, i)=>{
+     
+  if(userCar.x <= obs.x + obs.width && userCar.x + userCar.width >= obs.x 
+      && userCar.y <= obs.y + obs.height){
+          collision();
+          removeObstacle(i);
+       }
+  })
 }
 
 
