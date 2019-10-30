@@ -36,7 +36,6 @@ class Obstacle{
       },100)
   }
 }
-
 let userCar = new Car(0, 650, 50, 100);
 const carImg = new Image();
 const coneImg = new Image();
@@ -46,21 +45,55 @@ carImg.src = './images/car.png';
 coneImg.src = './images/cone.png';
 potholeImg.src = './images/pothole.png';
 barricadeImg.src = './images/barricade.png';
-
-function drawCar() {
+const typesOfObs = [coneImg, potholeImg, barricadeImg];
+let obsArr = [];
+function drawImages() {
   ctx.clearRect(0, 0, 400, 800);
+  //ctx.fillRect(userCar.x, userCar.y, userCar.width, userCar.height); 
   ctx.drawImage(carImg, userCar.x, userCar.y, userCar.width, userCar.height);
+  for (let i = 0; i < obsArr.length; i++) {
+    ctx.drawImage(typesOfObs[obsArr[i].type], obsArr[i].x, obsArr[i].y, obsArr[i].width, obsArr[i].height);
+ obsArr[i].moveDownForever();
+  }
 }
-
+function createObstacle () {
+  let r = Math.floor(Math.random() * 3);
+  let y = 0;
+  let x ;
+  let width;
+  let height;
+  switch (r) {
+    case 0:
+      x = Math.floor(Math.random() * 365) + 5;
+      width = 25;
+      height = 50;
+      let cone = new Obstacle(x, y, width, height, r);
+      obsArr.push(cone);
+      break;
+    case 1:
+        x = Math.floor(Math.random() * 365) + 5;
+        width = 25;
+        height = 50;
+        let pothole = new Obstacle(x, y, width, height, r);
+        obsArr.push(pothole);
+        break;
+    case 2:
+      x = Math.floor(Math.random() * 350) + 5;
+      width = 40;
+      height = 30;
+      let barricade = new Obstacle(x, y, width, height, r);
+      obsArr.push(barricade);
+      break;
+  }
+}
 document.getElementById("start-button").onclick = function() {
   startGame();
 };
-
 function startGame() {
-  drawCar();
+  drawImages();
+  
   requestAnimationFrame(startGame);
 }
-
 document.onkeydown = function(e) {
   switch (e.keyCode) {
     case 37:
@@ -75,4 +108,5 @@ document.onkeydown = function(e) {
       break;
   }
 }
+
 
