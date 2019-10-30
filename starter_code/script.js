@@ -26,7 +26,7 @@ class Obstacle{
      let blah = setInterval(()=>{
       //    each setInterval function gets a unique ID
       // were using blah here to save this ID
-          this.y += 5;
+          this.y += fallSpeed;
           if(this.y > 800){
               clearInterval(blah)
           }
@@ -90,16 +90,21 @@ function createObstacle () {
   }
 }
 
+let totalSpeed = 30;
 
 let obstaclesHit = 0;
 
 document.getElementById("start-button").onclick = function() {
   startGame();
   loopObs();
-  let healthHtml = document.createElement('h1');
-  healthHtml.setAttribute('class', 'health-points')
-  healthHtml.innerText = `${obstaclesHit}`;
-  document.querySelector('.game-intro').appendChild(healthHtml);
+  let obsHit = document.createElement('h1');
+  obsHit.setAttribute('class', 'obstacles-hit')
+  obsHit.innerText = `Obstacles Hit: ${obstaclesHit}`;
+  document.querySelector('.game-intro').appendChild(obsHit);
+  let theSpeed = document.createElement('h1');
+  theSpeed.setAttribute('class', 'the-speed');
+  theSpeed.innerText = `Current Speed: ${currentSpeed} MPH`
+  document.querySelector('.game-intro').appendChild(theSpeed);
 };
 
 function startGame() {
@@ -109,12 +114,42 @@ function startGame() {
   requestAnimationFrame(startGame);
 }
 
-let currentSpeed = 2500;
+let timeBetween = 2500;
+let currentSpeed = 5;
+let obstaclesPassed = 0;
+let fallSpeed = 3;
+let increaseTheSpeed = false;
+
+function increaseSpeed() {
+  document.querySelector('.the-speed').innerText = `Current Speed: ${currentSpeed} MPH`
+  timeBetween -= 75;
+  currentSpeed += 5;
+  if (increaseTheSpeed) {
+    fallSpeed += 1;
+    increaseTheSpeed = !increaseTheSpeed;
+  } else {
+    increaseTheSpeed = !increaseTheSpeed;
+  }
+  
+  loopObs();
+}
+
 
 function loopObs () {
-  setInterval(() => {
-    createObstacle();
-  }, currentSpeed);
+  let obs = setInterval(() => {
+    obstaclesPassed += 1;
+      createObstacle();
+    if (obstaclesPassed === 2) {
+      obstaclesPassed = 0;
+      clearInterval(obs);  
+      if (timeBetween > 100) {
+        increaseSpeed();
+      } else {
+        alert('You Win!!!')
+      }
+      
+    }
+  }, timeBetween);
 }
 
 function removeObstacle (i) {
@@ -124,14 +159,15 @@ function removeObstacle (i) {
 
 function collision() {
   obstaclesHit += 1;
-  document.querySelector('.health-points').innerText = `Obstacles Hit: ${obstaclesHit}`;
+  timeBetween += 300;
+  currentSpeed -= 10;
+  document.querySelector('.obstacles-hit').innerText = `Obstacles Hit: ${obstaclesHit}`;
 }
 
 function collisionDetect(){
-  obsArr.forEach((obs, i)=>{
-     
+  obsArr.forEach((obs, i)=>{    
   if(userCar.x <= obs.x + obs.width && userCar.x + userCar.width >= obs.x 
-      && userCar.y <= obs.y + obs.height){
+      && userCar.y <= obs.y + obs.height && userCar.y + userCar.height >= obs.y){
           collision();
           removeObstacle(i);
        }
